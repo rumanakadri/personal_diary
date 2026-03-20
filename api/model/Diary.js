@@ -33,7 +33,7 @@ class Diary {
   }
 
   static async getDiaryDetailsByDesc(desc){
-    const response = await db.query("SELECT * FROM diary WHERE LOWER(desc) LIKE LOWER(%$1%);",[desc]);
+    const response = await db.query("SELECT * FROM diary WHERE LOWER(notes) LIKE LOWER(%$1%);",[desc]);
     if (response.rows.length === 0) {
         throw new Error('No notes available with that desc')
     }
@@ -49,10 +49,10 @@ class Diary {
   }
   
   static async createDiaryNotes(diaryDetails) {
-    const { category_id, name, date} = diaryDetails;
+    const { category_id, notes, date} = diaryDetails;
     let response = 
-    await db.query ("INSERT into diary (category_id, name, date) VALUES ($1, $2, $3) RETURNING *;", 
-        [category_id, name, date]);
+    await db.query ("INSERT into diary (category_id, notes, date) VALUES ($1, $2, $3) RETURNING *;", 
+        [category_id, notes, date]);
     return response.rows[0];
   }
 
