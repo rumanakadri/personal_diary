@@ -1,15 +1,16 @@
 const db = require('../database/connect')
 
 class Diary {
-    constructor({id, category_id, notes, date}) {
+    constructor({id, category_id, category, notes, date}) {
         this.id = id,
         this.category_id = category_id,
+        this.category = category
         this.notes = notes,
         this.date = date
     }
 
     static async getAll() {
-    const response = await db.query("SELECT * FROM diary;")
+    const response = await db.query("SELECT diary.id, diary.notes, category.name as category, diary.date FROM diary LEFT JOIN category ON diary.category_id = category.id;")
     if (response.rows.length === 0) {
         throw new Error('No notes available')
     }
@@ -17,7 +18,7 @@ class Diary {
   }
 
   static async getDiaryDetailsByCategory(category_id){
-    const response = await db.query("SELECT * FROM diary WHERE category_id = $1;",[category_id]);
+    const response = await db.query("SELECT diary.id, diary.notes, category.name as category, diary.date FROM diary LEFT JOIN category ON diary.category_id = category.id WHERE category_id = $1;",[category_id]);
     if (response.rows.length === 0) {
         throw new Error('No notes available with that category')
     }
@@ -25,7 +26,7 @@ class Diary {
   }
 
   static async getDiaryDetailsByDate(date){
-    const response = await db.query("SELECT * FROM diary WHERE date = $1;",[date]);
+    const response = await db.query("SELECT diary.id, diary.notes, category.name as category, diary.date FROM diary JOIN category ON diary.category_id = category.id WHERE diary.date = $1;",[date]);
     if (response.rows.length === 0) {
         throw new Error('No notes available with that date')
     }
@@ -33,7 +34,7 @@ class Diary {
   }
 
   static async getDiaryDetailsByDesc(desc){
-    const response = await db.query("SELECT * FROM diary WHERE LOWER(notes) LIKE LOWER(%$1%);",[desc]);
+    const response = await db.query("SELECT diary.id, diary.notes, category.name as category, diary.date FROM diary JOIN category ON diary.category_id = category.id WHERE LOWER(notes) LIKE LOWER(%$1%);",[desc]);
     if (response.rows.length === 0) {
         throw new Error('No notes available with that desc')
     }
@@ -41,7 +42,7 @@ class Diary {
   }
   
  static async getDiaryDetailsByID(id){
-    const response = await db.query("SELECT * FROM diary WHERE id = $1;",[id]);
+    const response = await db.query("SELECT diary.id, diary.notes, category.name as category, diary.date FROM diary JOIN category ON diary.category_id = category.id WHERE diary.id = $1;",[id]);
     if (response.rows.length === 0) {
         throw new Error('No notes available with that id')
     }
