@@ -8,12 +8,12 @@ if (entryForm) {
         const date = document.getElementById('date').value;
         const category = document.getElementById('category').value;
         const notes = document.getElementById('notes').value;
-
+        console.log(category)
         try {
-            const res = await fetch('/entries', {
+            const res = await fetch('https://personal-diary-fuwn.onrender.com/diary', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ date, category, notes })
+                body: JSON.stringify({ category, notes, date })
             });
 
             if (res.ok) {
@@ -38,7 +38,7 @@ if (entriesList && applyFiltersBtn) {
 
     const fetchEntries = async () => {
         try {
-            const res = await fetch('/entries');
+            const res = await fetch('https://personal-diary-fuwn.onrender.com/diary');
             allEntries = await res.json();
             renderEntries(allEntries);
         } catch (err) {
