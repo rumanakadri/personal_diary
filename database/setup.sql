@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS diary;
+
+CREATE TABLE category (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(30) UNIQUE NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE diary (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    category_id INT NOT NULL,
+    notes VARCHAR(30) NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category,
+    PRIMARY KEY (id)
+);
