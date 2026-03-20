@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Entry</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Create Entry</a>
+      <a href="entries.html">View Entries</a>
+    </nav>
+
+    <h1>Create New Entry</h1>
+
+    <form id="entryForm">
+      <label>Date & Time:</label>
+      <input type="datetime-local" id="date" required />
+
+      <label>Category:</label>
+      <select id="category" required>
+        <option value="" disabled selected hidden>Select category</option>
+        <option value="Love">Love</option>
+        <option value="Work">Work</option>
+        <option value="Life">Life</option>
+        <option value="Fitness">Fitness</option>
+      </select>
+
+      <label>Notes:</label>
+      <textarea id="notes" rows="5" required></textarea>
+
+      <button type="submit">Add Entry</button>
+    </form>
+
+    <script src="script.js"></script>
+  </body>
+</html>
